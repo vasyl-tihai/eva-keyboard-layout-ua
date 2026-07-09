@@ -1,82 +1,84 @@
-# 🇺🇦 Українські ергономічні розкладки «Ева» та «Ліна»
+# 🇺🇦 Eva & Lina — Ergonomic Ukrainian Keyboard Layouts
 
-🇬🇧 [English version](README.en.md)
+🇺🇦 [Українська версія](README.uk.md)
 
-Ергономічні розкладки для набору українською на спліт-клавіатурах
-(Corne/crkbd, Kyria, Lily58, Sofle та інших колонково-ступінчастих або ортолінійних бордах).
+Ergonomic layouts for typing Ukrainian on split keyboards
+(Corne/crkbd, Kyria, Lily58, Sofle and other column-staggered or ortholinear boards).
 
-Якщо ви пробували [Colemak](https://colemak.com/), Colemak-DH, Dvorak, Workman чи
-[Canary](https://github.com/Apsu/Canary) — ви знаєте, наскільки важлива оптимізація рухів пальців.
-Цей репозиторій переносить ці практики на український алфавіт: тут є готові розкладки,
-історія їхньої еволюції, Python-оптимізатор для генерації власної розкладки та
-аналізатор, який рахує метрики на вашому корпусі текстів.
+If you have tried [Colemak](https://colemak.com/), Colemak-DH, Dvorak, Workman or
+[Canary](https://github.com/Apsu/Canary), you know how much finger-motion optimization matters.
+This repository brings those practices to the Ukrainian alphabet: ready-to-use layouts,
+their evolution history, a Python optimizer that generates a layout for your own texts,
+and an analyzer that computes the metrics on any corpus.
 
-## Зміст
+## Contents
 
-- [Чому ЙЦУКЕН незручна на 40 % клавіатурах](#-чому-йцукен-незручна-на-40--клавіатурах)
-- [Метрики: цифри замість обіцянок](#-метрики-цифри-замість-обіцянок)
-- [«Ева» — ручна оптимізація](#-гілка-ева--ручна-оптимізація-рекомендовано)
-- [Встановлення (Vial)](#-встановлення-evavil-у-vial)
-- [Історія еволюції «Еви»](#-історія-еволюції-еви)
-- [«Ліна» — математична оптимізація](#-гілка-ліна--математична-оптимізація)
-- [Canary Phonetic UA](#-canary-phonetic-ua-міст-між-мовами)
-- [Як згенерувати розкладку під себе](#-як-згенерувати-розкладку-під-себе)
-- [Пропозиції покращень](#-пропозиції-покращень)
-- [Джерела](#-джерела)
+- [Why ЙЦУКЕН fails on 40 % keyboards](#-why-йцукен-fails-on-40--keyboards)
+- [Metrics: numbers instead of promises](#-metrics-numbers-instead-of-promises)
+- [Eva — manual optimization](#-the-eva-branch--manual-optimization-recommended)
+- [Installation (Vial)](#-installing-evavil-in-vial)
+- [Eva evolution history](#-eva-evolution-history)
+- [Lina — mathematical optimization](#-the-lina-branch--mathematical-optimization)
+- [Canary Phonetic UA](#-canary-phonetic-ua-a-bridge-between-languages)
+- [Generate a layout for yourself](#-generate-a-layout-tailored-to-you)
+- [Improvement proposals](#-improvement-proposals)
+- [Sources](#-sources)
 
-## 🛑 Чому ЙЦУКЕН незручна на 40 % клавіатурах
+## 🛑 Why ЙЦУКЕН fails on 40 % keyboards
 
-Стандартна розкладка успадкована від друкарських машинок. На компактній
-спліт-клавіатурі її проблеми видно в цифрах (корпус 6.2 млн літер, [analyzer.py](analyzer.py)):
+ЙЦУКЕН (the standard Ukrainian layout, a sibling of the Russian ЙЦУКЕН and a
+typewriter-era design like QWERTY) was never optimized for typing comfort. On a compact
+split keyboard its problems are visible in numbers (6.2 M-letter corpus, [analyzer.py](analyzer.py)):
 
-- **Перевантаження вказівних пальців.** Лівий вказівний тримає К, Е, А, П, М, И — 29.7 %
-  усіх натискань; правий — Н, Г, Р, О, Т, Ь — ще 29.9 %. **Разом два пальці роблять 59.6 % роботи.**
-- **Високий SFB** (Same Finger Bigram — дві літери поспіль одним пальцем). У ЙЦУКЕН
-  таких **18.3 % усіх біграм**: «ро», «но», «ор», «го», «то», «ка», «ки»…
-  Це збиває ритм і втомлює суглоби.
-- **Дисбаланс рук:** 54 % натискань на лівій руці, довгі серії на одній руці.
+- **Index-finger overload.** The left index finger owns К, Е, А, П, М, И — 29.7 %
+  of all keystrokes; the right one owns Н, Г, Р, О, Т, Ь — another 29.9 %.
+  **Two fingers do 59.6 % of all the work.**
+- **High SFB rate** (Same Finger Bigram — two consecutive letters typed with one finger).
+  In ЙЦУКЕН **18.3 % of all bigrams** are SFBs: «ро», «но», «ор», «го», «то», «ка», «ки»…
+  This breaks the rhythm and strains the joints.
+- **Hand imbalance:** 54 % of keystrokes land on the left hand, with long one-hand runs.
 
-Щоб вирішити це, ми пішли двома шляхами: **«Ева»** (ручна, логічна оптимізація)
-та **«Ліна»** (математична оптимізація кодом).
+To fix this we went down two roads: **Eva** (manual, logic-driven optimization)
+and **Lina** (mathematical optimization by code).
 
-## 📊 Метрики: цифри замість обіцянок
+## 📊 Metrics: numbers instead of promises
 
-Пораховано скриптом [analyzer.py](analyzer.py) на змішаному корпусі з **6.2 млн літер**
-трьох жанрів: збалансований письмовий ([Brown-UK](https://github.com/brown-uk/corpus)),
-розмовний ([субтитри OpenSubtitles](https://opus.nlpl.eu/OpenSubtitles.php)) та
-енциклопедичний (українська Вікіпедія). Модель чесна: внутрішня колонка належить
-вказівному пальцю, біграми рахуються лише всередині слів (пробіл на великому пальці
-розриває їх).
+Computed with [analyzer.py](analyzer.py) on a mixed corpus of **6.2 million letters**
+across three genres: balanced written Ukrainian ([Brown-UK](https://github.com/brown-uk/corpus)),
+conversational ([OpenSubtitles](https://opus.nlpl.eu/OpenSubtitles.php) dialogue) and
+encyclopedic (Ukrainian Wikipedia). The model is honest: the inner column belongs to
+the index finger, and bigrams are counted only inside words (the thumb-key Space
+breaks them between words).
 
-| Розкладка | SFB % ↓ | Чергування рук % ↑ | Домашній ряд % ↑ | Мізинці % ↓ |
+| Layout | SFB % ↓ | Hand alternation % ↑ | Home row % ↑ | Pinkies % ↓ |
 |---|---|---|---|---|
 | ЙЦУКЕН | 18.30 | 54.2 | 43.9 | 9.4 |
-| Ева 3.8 | 2.92 | 57.1 | 58.3 | 19.9 |
-| **Ева 3.9** | **1.96** | 55.4 | **58.3** | 19.9 |
-| Ліна | 0.97 | 74.9 | 53.8 | 24.5 |
+| Eva 3.8 | 2.92 | 57.1 | 58.3 | 19.9 |
+| **Eva 3.9** | **1.96** | 55.4 | **58.3** | 19.9 |
+| Lina | 0.97 | 74.9 | 53.8 | 24.5 |
 | Canary Phonetic UA | 5.15 | 56.7 | 47.1 | 14.8 |
 
-**Ева 3.9 має у 9 разів менше SFB, ніж ЙЦУКЕН**, і тримає 58 % набору на домашньому ряду.
-Плата — навантаженіші мізинці (И та Е живуть на мізинцях). Ліна виграє в SFB і чергуванні,
-але перевантажує мізинці ще більше — див. [пропозиції покращень](ПРОПОЗИЦІЇ.md).
+**Eva 3.9 has 9× fewer SFBs than ЙЦУКЕН** while keeping 58 % of typing on the home row.
+The price is heavier pinkies (И and Е live on them). Lina wins on SFB and alternation
+but loads the pinkies even more — see the [improvement proposals](PROPOSALS.md).
 
-## 👑 Гілка «Ева» — ручна оптимізація (рекомендовано)
+## 👑 The Eva branch — manual optimization (recommended)
 
-«Ева» створювалася людиною для людини: частотний аналіз української, чергування рук
-(приголосні здебільшого зліва, основні голосні О-А-Е-У-І — під правою рукою)
-та зручні перекати (rolls).
+Eva was designed by a human for humans: Ukrainian letter-frequency analysis, hand
+alternation (consonants mostly on the left, the core vowels О-А-Е-У-І under the right
+hand) and comfortable rolls.
 
-### 🏆 Найкращий вибір: Ева 3.9
+### 🏆 Best pick: Eva 3.9
 
-Найновіша версія — результат кількісного аудиту Еви 3.8 (методика й цифри — у
-[ПРОПОЗИЦІЇ.md](ПРОПОЗИЦІЇ.md)). Три обміни поза домашнім рядом — **М↔Ч, К↔Ц, Д↔З** —
-розвели найчастіші конфлікти одного пальця («кр», «ск», «чн», «др»):
-SFB впав з 2.92 % до **1.96 %** (−33 %), а домашній ряд (58.3 %), мізинці та
-голосний блок Н-О-А-Е лишилися рівно тими самими. Перевчання мінімальне: всі шість
-змінених літер — на верхньому/нижньому рядах. Файл розкладки: [Eva-3.9.vil](Eva-3.9.vil)
+The latest version — the result of a quantitative audit of Eva 3.8 (method and numbers
+in [PROPOSALS.md](PROPOSALS.md)). Three swaps outside the home row — **М↔Ч, К↔Ц, Д↔З** —
+untangled the most frequent same-finger conflicts («кр», «ск», «чн», «др»):
+SFB dropped from 2.92 % to **1.96 %** (−33 %) while the home row (58.3 %), the pinkies
+and the Н-О-А-Е vowel block stayed exactly the same. Relearning is minimal: all six
+relocated letters sit on the top/bottom rows. Layout file: [Eva-3.9.vil](Eva-3.9.vil)
 
 <p align="center">
-  <img src="images/eva-3.9.svg" alt="Розкладка Ева 3.9 — помаранчевим виділено клавіші, що змінилися відносно 3.8" width="700">
+  <img src="images/eva-3.9.svg" alt="Eva 3.9 layout — orange outline marks the keys changed relative to 3.8" width="700">
 </p>
 
 ```text
@@ -85,46 +87,47 @@ SFB впав з 2.92 % до **1.96 %** (−33 %), а домашній ряд (58
 [   ] [ Ж ] [ К ] [ Д ] [ Б ] [ Ч ]        [ Ш ] [ М ] [ , ] [ . ] [ Ь ] [ Ф ]
 ```
 
-Звикли до 3.8? Вона нікуди не зникає: файл [Eva.vil](Eva.vil), схема — в
-[історії еволюції](#-історія-еволюції-еви) нижче.
+Used to 3.8? It is not going anywhere: the file is [Eva.vil](Eva.vil), the diagram is in
+the [evolution history](#-eva-evolution-history) below.
 
-Літери, яких не видно на схемі:
+Letters you do not see on the diagram:
 
-- **Ґ** — утримання клавіші **Г** (tap-hold);
-- **апостроф** — комбо (одночасне натискання) **И + В**;
-- цифри та символи — на окремому шарі (Layer 2).
+- **Ґ** — tap-hold on the **Г** key;
+- **apostrophe** — a combo (simultaneous press) of **И + В**;
+- digits and symbols live on a separate layer (Layer 2).
 
-## 🔧 Встановлення Eva.vil у Vial
+## 🔧 Installing Eva.vil in Vial
 
-1. Прошийте клавіатуру [Vial](https://get.vial.today/)-сумісною прошивкою.
-2. Відкрийте програму Vial → **File → Load saved layout** → виберіть `Eva-3.9.vil`
-   (або `Eva.vil`, якщо хочете класичну 3.8).
-3. Увімкніть у системі **українську розкладку** — шар 0 надсилає системні сканкоди,
-   тож ОС має інтерпретувати їх як ЙЦУКЕН (файл робить решту).
-4. Для перемикання мов у файлі є макроси: **M0** = `Ctrl+0` + перехід на шар 0 (українська),
-   **M1** = `Ctrl+1` + шар 1 (англійська Canary). Призначте `Ctrl+0`/`Ctrl+1` гарячими
-   клавішами зміни мови у вашій ОС або замініть макроси на свої (`Alt+Shift`, `Win+Space`).
+1. Flash your keyboard with a [Vial](https://get.vial.today/)-compatible firmware.
+2. Open the Vial app → **File → Load saved layout** → pick `Eva-3.9.vil`
+   (or `Eva.vil` if you prefer the classic 3.8).
+3. Enable the **Ukrainian layout in your OS** — layer 0 sends host scancodes, so the OS
+   must interpret them as ЙЦУКЕН (the file does the rest).
+4. Language switching uses macros: **M0** = `Ctrl+0` + switch to layer 0 (Ukrainian),
+   **M1** = `Ctrl+1` + layer 1 (English Canary). Bind `Ctrl+0`/`Ctrl+1` as language
+   hotkeys in your OS, or replace the macros with your own (`Alt+Shift`, `Win+Space`).
 
-Шари у файлі: **0** — Ева (українська), **1** — англійська Canary, **2** — цифри й символи,
-**7** — службовий (перемикання шарів). Комбо на шарі 0 дають апостроф, дужки, тире тощо.
+Layers in the file: **0** — Eva (Ukrainian), **1** — English Canary, **2** — digits and
+symbols, **7** — service layer (layer switching). Combos on layer 0 produce the
+apostrophe, brackets, dashes and more.
 
-> Комбо в `Eva-3.9.vil` прив'язані до літер, тому після обмінів працюють далі, але два
-> жести (з+б та к+п) фізично опинилися на інших клавішах — за бажання перепризначте
-> їх у Vial на зручніші пари.
+> Combos in `Eva-3.9.vil` are bound to letters, so they keep working after the swaps,
+> but two gestures (з+б and к+п) physically ended up on different keys — remap them in
+> Vial to more comfortable pairs if you like.
 
-> ⚠️ `Eva.vil` — мій особистий конфіг для плати з додатковими клавішами (46 активних
-> позицій: PrtScr, Tab, Copy/Paste тощо; Ї/Ю/Ф у Vial-матриці підключені в четвертому
-> ряду). На стандартному Corne 42 розкладка працює, але службові клавіші доведеться
-> розставити під себе. Схема вище показує основну зону 3×6+3×6.
+> ⚠️ `Eva.vil` is my personal config for a board with extra keys (46 active positions:
+> PrtScr, Tab, Copy/Paste etc.; Ї/Ю/Ф are wired into the fourth row of the Vial matrix).
+> On a standard Corne 42 the layout works, but you will have to place the service keys
+> yourself. The diagram above shows the core 3×6+3×6 zone.
 
-## 📜 Історія еволюції «Еви»
+## 📜 Eva evolution history
 
-Розкладка не стала такою за один день:
+The layout did not get here in one day:
 
-- **Ева 3.0 — аналіз біграм.** Перша серйозна спроба розвести найчастіші біграми
-  («сп», «тр», «нш») для комфортних перекатів.
+- **Eva 3.0 — bigram analysis.** The first serious attempt to untangle the most frequent
+  bigrams («сп», «тр», «нш») for comfortable rolls.
 
-  <img src="images/eva-3.0.png" alt="Розкладка Ева 3.0" width="600">
+  <img src="images/eva-3.0.png" alt="Eva 3.0 layout" width="600">
 
   ```text
   [   ] [ Я ] [ Й ] [ П ] [ К ] [ Д ]        [ Г ] [ Ю ] [ У ] [ Л ] [ Щ ] [ Ї ]
@@ -132,20 +135,20 @@ SFB впав з 2.92 % до **1.96 %** (−33 %), а домашній ряд (58
   [   ] [ Ж ] [ Ц ] [ З ] [ Б ] [ М ]        [ Ф ] [ Ч ] [ Ш ] [ . ] [ Ь ] [ Є ]
   ```
 
-- **Ева 3.2 — пунктуація та периферія.** Початок експериментів з розділовими знаками
-  та розміщенням рідкісних літер на краях; Є переїхала на лівий мізинець.
+- **Eva 3.2 — punctuation and periphery.** First experiments with punctuation and with
+  pushing rare letters to the edges; Є moved to the left pinky.
 
-  <img src="images/eva-3.2.png" alt="Розкладка Ева 3.2" width="600">
+  <img src="images/eva-3.2.png" alt="Eva 3.2 layout" width="600">
 
-- **Ева 3.6 — робота над шарами.** Основна матриця лишилася як у 3.2, змінилася
-  логіка додаткових шарів і службових клавіш.
+- **Eva 3.6 — layer work.** The core matrix stayed as in 3.2; the logic of the extra
+  layers and service keys changed.
 
-  <img src="images/eva-3.6.png" alt="Розкладка Ева 3.6" width="600">
+  <img src="images/eva-3.6.png" alt="Eva 3.6 layout" width="600">
 
-- **Ева 3.7 — майже фінал.** І, Ю, Л знайшли свої місця (І в центрі верхнього ряду,
-  Ю на мізинці), але кома та крапка ще потребували змін.
+- **Eva 3.7 — almost final.** І, Ю and Л found their places (І in the centre of the top
+  row, Ю on the pinky), but the comma and the period still needed work.
 
-  <img src="images/eva-3.7.png" alt="Розкладка Ева 3.7" width="600">
+  <img src="images/eva-3.7.png" alt="Eva 3.7 layout" width="600">
 
   ```text
   [   ] [ Я ] [ Й ] [ П ] [ К ] [ Д ]        [ Г ] [ Л ] [ У ] [ І ] [ Щ ] [ Ї ]
@@ -153,11 +156,11 @@ SFB впав з 2.92 % до **1.96 %** (−33 %), а домашній ряд (58
   [   ] [ Ж ] [ Ц ] [ З ] [ Б ] [ М ]        [ Ф ] [ Ч ] [ Ш ] [ , ] [ Ь ]
   ```
 
-- **Ева 3.8 — ідеальна пунктуація.** З основної зони прибрано Delete — кома та крапка
-  стали на зручні позиції нижнього ряду. Довгий час була рекомендованою версією
-  (файл: [Eva.vil](Eva.vil)).
+- **Eva 3.8 — perfect punctuation.** Delete left the core zone, letting the comma and
+  the period take comfortable bottom-row spots. It was the recommended version for a
+  long time (file: [Eva.vil](Eva.vil)).
 
-  <img src="images/eva-3.8.png" alt="Розкладка Ева 3.8" width="600">
+  <img src="images/eva-3.8.png" alt="Eva 3.8 layout" width="600">
 
   ```text
   [   ] [ Я ] [ Й ] [ П ] [ К ] [ Д ]        [ Г ] [ Л ] [ У ] [ І ] [ Щ ] [ Ї ]
@@ -165,33 +168,33 @@ SFB впав з 2.92 % до **1.96 %** (−33 %), а домашній ряд (58
   [   ] [ Ж ] [ Ц ] [ З ] [ Б ] [ М ]        [ Ш ] [ Ч ] [ , ] [ . ] [ Ь ] [ Ф ]
   ```
 
-- **Ева 3.9 — кількісний аудит** (див. вище). Аналіз на корпусі 6.2 млн літер показав,
-  що всі найчастіші SFB (кр, ск, чн, др) можна розвести трьома обмінами поза домашнім
-  рядом: М↔Ч, К↔Ц, Д↔З. SFB −33 % без жодних втрат у решті метрик.
+- **Eva 3.9 — the quantitative audit** (see above). Analysis on a 6.2 M-letter corpus
+  showed that all the most frequent SFBs (кр, ск, чн, др) can be untangled with three
+  swaps outside the home row: М↔Ч, К↔Ц, Д↔З. SFB −33 % with zero losses elsewhere.
 
-## 🤖 Гілка «Ліна» — математична оптимізація
+## 🤖 The Lina branch — mathematical optimization
 
-Після створення логічної бази ми запитали себе: а що вирішить чиста математика?
-[main.py](main.py) — оптимізатор на основі **імітації відпалу** (simulated annealing):
-він сотні тисяч разів міняє літери місцями на віртуальній клавіатурі, «друкує» ваш
-корпус і шукає розстановку з мінімальним зусиллям та мінімальним SFB.
+Once the logical base existed, we asked: what would pure math decide?
+[main.py](main.py) is a **simulated annealing** optimizer: hundreds of thousands of
+times it swaps letters on a virtual keyboard, "types" your corpus and searches for the
+arrangement with minimal effort and minimal SFB.
 
-> Чесне уточнення: алгоритм розставляє лише 33 літери. Кому та крапку на клавіші
-> великих пальців ми винесли вручну — це дизайнерське рішення, а не висновок коду.
+> Honest note: the algorithm places only the 33 letters. Putting the comma and the
+> period on the thumb keys was our manual design decision, not a conclusion of the code.
 
-Еволюція результату з ростом кількості ітерацій:
+How the result evolves as iterations grow:
 
-- **10 000 ітерацій** — розкладка ще хаотична:
+- **10 000 iterations** — the layout is still chaotic:
 
-  <img src="images/lina-10k.png" alt="Розкладка Ліна після 10 тисяч ітерацій" width="600">
+  <img src="images/lina-10k.png" alt="Lina layout after 10 thousand iterations" width="600">
 
-- **1 000 000 ітерацій** — голосні групуються, конфлікти тануть:
+- **1 000 000 iterations** — vowels cluster, conflicts melt away:
 
-  <img src="images/lina-1m.png" alt="Розкладка Ліна після 1 мільйона ітерацій" width="600">
+  <img src="images/lina-1m.png" alt="Lina layout after 1 million iterations" width="600">
 
-- **10 000 000 ітерацій** — фінальна версія:
+- **10 000 000 iterations** — the final version:
 
-  <img src="images/lina-10m.png" alt="Розкладка Ліна після 10 мільйонів ітерацій" width="600">
+  <img src="images/lina-10m.png" alt="Lina layout after 10 million iterations" width="600">
 
   ```text
   [ Е ] [ Я ] [ Ґ ] [ З ] [ Ю ]        [ Є ] [ Г ] [ М ] [ С ] [ Ф ] [ Ц ]
@@ -199,91 +202,92 @@ SFB впав з 2.92 % до **1.96 %** (−33 %), а домашній ряд (58
   [ Ь ] [ И ] [ У ] [ Ж ] [ Ш ]        [ Х ] [ П ] [ Л ] [ Ч ] [ Б ] [ Щ ]
   ```
 
-SFB у Ліни — 0.97 %, чергування рук — 75 %. Слабке місце — 24.5 % навантаження на
-мізинці. Перша версія оптимізатора мала дві помилки в моделі (виправлені в поточному
-`main.py`); перегенерована «Ліна 2.0» з удвічі меншим SFB і легкими мізинцями —
-у [ПРОПОЗИЦІЇ.md](ПРОПОЗИЦІЇ.md).
+Lina's SFB is 0.97 % with 75 % hand alternation. Its weak spot is the 24.5 % pinky
+load. The first version of the optimizer had two model bugs (fixed in the current
+`main.py`); the regenerated **Lina 2.0** with half the SFB and light pinkies lives in
+[PROPOSALS.md](PROPOSALS.md).
 
-## 🦜 Canary Phonetic UA: міст між мовами
+## 🦜 Canary Phonetic UA: a bridge between languages
 
-Спеціалізована розкладка для тих, хто 70 %+ часу друкує англійською
-(код, документація, термінал), але хоче комфортно перемикатися на українську.
+A specialized layout for people who type English 70 %+ of the time (code,
+documentation, terminal) but want to switch to Ukrainian comfortably.
 
-Головна проблема зміни мови — злам м'язової пам'яті: мозок знає, що під правим
-вказівним лежить N, а система видає йому Т (як у ЙЦУКЕН). Canary Phonetic UA
-розв'язує це **фонетичною відповідністю** до англійської розкладки
-[Canary](https://github.com/Apsu/Canary): та сама клавіша — той самий звук.
+The core problem of switching languages is broken muscle memory: your brain knows N
+sits under the right index finger, yet the system gives that key Т (as ЙЦУКЕН does).
+Canary Phonetic UA solves this with a **phonetic mapping** onto the English
+[Canary](https://github.com/Apsu/Canary) layout: same key — same sound.
 
-- **Центральний блок збігається:** англійські N-E-I-A стають українськими Н-Е-І-А.
-- **Фонетичні пари приголосних:** W→Ш, L→Л, R→Р, S→С, T→Т, B→Б, P→П, V→В, D→Д, M→М…
-- **Літери без прямих аналогів** отримали логічні слоти: Я на Q (традиція фонетичних
-  розкладок), Ж на H, Ь на апострофі, Ю та Щ — на позиціях коми та крапки.
-- **Tap-hold:** Є = утримання Е, Ї = утримання І, Ґ = утримання Г.
+- **The central block matches:** English N-E-I-A become Ukrainian Н-Е-І-А.
+- **Phonetic consonant pairs:** W→Ш, L→Л, R→Р, S→С, T→Т, B→Б, P→П, V→В, D→Д, M→М…
+- **Letters with no direct analogue** got logical slots: Я on Q (a phonetic-layout
+  tradition), Ж on H, Ь on the apostrophe, Ю and Щ on the comma and period positions.
+- **Tap-hold:** Є = hold Е, Ї = hold І, Ґ = hold Г.
 
 <p align="center">
-  <img src="images/canary-phonetic-ua.png" alt="Canary Phonetic UA — українська фонетична розкладка на основі Canary" width="600">
+  <img src="images/canary-phonetic-ua.png" alt="Canary Phonetic UA — a phonetic Ukrainian layout based on Canary" width="600">
 </p>
 
-Результат: пальці рухаються тими самими траєкторіями для тих самих звуків,
-перемикання мови не ламає звичок. Чесна ціна: SFB 5.15 % — вищий, ніж у Еви
-(фонетичні позиції І та С ділять один палець із В та И — біграми «ви», «ис», «си»).
-Якщо українська для вас основна — беріть Еву; Canary Phonetic UA — для
-переважно англомовного робочого дня.
+The result: your fingers travel the same paths for the same sounds, and switching the
+language does not break habits. The honest price: SFB 5.15 % — higher than Eva's
+(the phonetic positions of І and С share a finger with В and И — bigrams «ви», «ис»,
+«си»). If Ukrainian is your primary language, take Eva; Canary Phonetic UA is for a
+mostly-English workday.
 
-> Прим.: за основу взято гібрид ANSI- та matrix-версій Canary, адаптований під
-> колонково-ступінчасту геометрію.
+> Note: the base is a hybrid of the ANSI and matrix Canary variants, adapted to
+> column-staggered geometry.
 
-## 💻 Як згенерувати розкладку під себе
+## 💻 Generate a layout tailored to you
 
-Оптимізатор налаштовується під ваш стиль письма:
+The optimizer adapts to your writing style:
 
-1. Створіть папку `corpus_texts` поруч зі скриптом `main.py`.
-2. Покладіть туди `.txt` файли: експорт чатів Telegram, улюблені книги, робочі
-   тексти — що більше, то краще (мінімум ~100 000 літер).
-3. Запустіть:
+1. Create a `corpus_texts` folder next to `main.py`.
+2. Put `.txt` files there: Telegram chat exports, favourite books, work texts —
+   the more the better (at least ~100 000 letters).
+3. Run:
 
    ```bash
    python main.py
-   # або з параметрами:
+   # or with parameters:
    python main.py --iterations 500000 --restarts 4 --seed 42
    ```
 
-Скрипт працює на чистому Python 3 без залежностей, виводить розкладку в термінал
-і зберігає в `layout_result.txt` разом із метриками. Порівняти з готовими розкладками:
+The script runs on pure Python 3 with no dependencies, prints the layout to the
+terminal and saves it to `layout_result.txt` together with its metrics. To compare
+against the ready-made layouts:
 
 ```bash
-python analyzer.py corpus_texts/мій_текст.txt
+python analyzer.py corpus_texts/my_text.txt
 ```
 
-## 🛠 Рекомендації для прошивки (QMK/ZMK/Vial)
+## 🛠 Firmware recommendations (QMK/ZMK/Vial)
 
-- **Home Row Mods:** повісьте Shift/Ctrl/Alt/Win на утримання літер домашнього ряду —
-  мізинцям не доведеться тягнутися до модифікаторів.
-- **Комбо:** одночасне натискання двох сусідніх клавіш для апострофа, бекспейсу,
-  дужок (у `Eva.vil` вже налаштовано десяток таких).
+- **Home Row Mods:** put Shift/Ctrl/Alt/Win on hold-taps of the home-row letters —
+  your pinkies will never reach for modifiers again.
+- **Combos:** simultaneous presses of two neighbouring keys for the apostrophe,
+  backspace, brackets (`Eva.vil` ships with a dozen of these).
 
-## 💡 Пропозиції покращень
+## 💡 Improvement proposals
 
-Кількісний аудит розкладок і конкретні варіанти з цифрами — у
-[ПРОПОЗИЦІЇ.md](ПРОПОЗИЦІЇ.md): «Ева 3.9» (три обміни поза домашнім рядом:
-−42 % SFB при незмінному домашньому ряді), «Ева 3.9+» (мінімальний SFB)
-та «Ліна 2.0» (перегенерована чесною моделлю).
+The quantitative audit of the layouts with concrete, measured variants lives in
+[PROPOSALS.md](PROPOSALS.md): Eva 3.9 (three swaps outside the home row: −33 % SFB
+with the home row untouched), Eva 3.9+ (minimal SFB) and Lina 2.0 (regenerated with
+the honest model).
 
-## 🤝 Внесок
+## 🤝 Contributing
 
-Ергономіка — нескінченний процес. Тестуйте Еву 3.9, експериментуйте з Ліною,
-рахуйте метрики на своїх текстах — і діліться результатами через Issue або Pull Request.
-Зробимо український друк швидким і зручним! 🇺🇦⌨️
+Ergonomics is a never-ending process. Test Eva 3.9, experiment with Lina, run the
+metrics on your own texts — and share the results via an Issue or a Pull Request.
+Let's make Ukrainian typing fast and comfortable! 🇺🇦⌨️
 
-## 📚 Джерела
+## 📚 Sources
 
-- [Canary keyboard layout](https://github.com/Apsu/Canary) — оригінальна англійська Canary (Apsu та спільнота AKL).
-- [Keyboard layouts doc](https://bit.ly/keyboard-layouts-doc) — довідник спільноти альтернативних розкладок (SFB, rolls, alternation).
-- [Vial](https://get.vial.today/) — конфігуратор прошивки.
-- Частотні дані (6.2 млн літер): [Brown-UK](https://github.com/brown-uk/corpus) — збалансований корпус української,
-  [OpenSubtitles UA](https://opus.nlpl.eu/OpenSubtitles.php) — розмовний стиль,
-  випадкові статті [української Вікіпедії](https://uk.wikipedia.org/); скрипт [analyzer.py](analyzer.py).
+- [Canary keyboard layout](https://github.com/Apsu/Canary) — the original English Canary (Apsu and the AKL community).
+- [Keyboard layouts doc](https://bit.ly/keyboard-layouts-doc) — the alternative-layout community reference (SFB, rolls, alternation).
+- [Vial](https://get.vial.today/) — the firmware configurator.
+- Frequency data (6.2 M letters): [Brown-UK](https://github.com/brown-uk/corpus) — a balanced corpus of Ukrainian,
+  [OpenSubtitles UA](https://opus.nlpl.eu/OpenSubtitles.php) — conversational register,
+  random articles of the [Ukrainian Wikipedia](https://uk.wikipedia.org/); script [analyzer.py](analyzer.py).
 
-## 📄 Ліцензія
+## 📄 License
 
-[MIT](LICENSE) — використовуйте, модифікуйте, діліться.
+[MIT](LICENSE) — use, modify, share.
