@@ -1,4 +1,4 @@
-# 🇺🇦 Eva & Lina — Ergonomic Ukrainian Keyboard Layouts
+# 🇺🇦 Evelina & Lina — Ergonomic Ukrainian Keyboard Layouts
 
 🇺🇦 [Українська версія](README.uk.md)
 
@@ -15,9 +15,9 @@ and an analyzer that computes the metrics on any corpus.
 
 - [Why ЙЦУКЕН fails on 40 % keyboards](#-why-йцукен-fails-on-40--keyboards)
 - [Metrics: numbers instead of promises](#-metrics-numbers-instead-of-promises)
-- [Eva — manual optimization](#-the-eva-branch--manual-optimization-recommended)
+- [Evelina — manual optimization](#-the-evelina-branch--manual-optimization-recommended)
 - [Installation (Vial)](#-installing-evavil-in-vial)
-- [Eva evolution history](#-eva-evolution-history)
+- [Evelina evolution history](#-evelina-evolution-history)
 - [Lina — mathematical optimization](#-the-lina-branch--mathematical-optimization)
 - [Canary Phonetic UA](#-canary-phonetic-ua-a-bridge-between-languages)
 - [Generate a layout for yourself](#-generate-a-layout-tailored-to-you)
@@ -38,7 +38,7 @@ split keyboard its problems are visible in numbers (6.2 M-letter corpus, [analyz
   This breaks the rhythm and strains the joints.
 - **Hand imbalance:** 54 % of keystrokes land on the left hand, with long one-hand runs.
 
-To fix this we went down two roads: **Eva** (manual, logic-driven optimization)
+To fix this we went down two roads: **Evelina** (manual, logic-driven optimization)
 and **Lina** (mathematical optimization by code).
 
 ## 📊 Metrics: numbers instead of promises
@@ -53,24 +53,24 @@ breaks them between words).
 | Layout | SFB % ↓ | Hand alternation % ↑ | Home row % ↑ | Pinkies % ↓ |
 |---|---|---|---|---|
 | ЙЦУКЕН | 18.30 | 54.2 | 43.9 | 9.4 |
-| Eva 3.8 | 2.92 | 57.1 | 58.3 | 19.9 |
-| **Eva 3.9** | **1.96** | 55.4 | **58.3** | 19.9 |
+| Evelina 3.8 | 2.92 | 57.1 | 58.3 | 19.9 |
+| **Evelina 3.9** | **1.96** | 55.4 | **58.3** | 19.9 |
 | Lina | 0.97 | 74.9 | 53.8 | 24.5 |
 | Canary Phonetic UA | 5.15 | 56.7 | 47.1 | 14.8 |
 
-**Eva 3.9 has 9× fewer SFBs than ЙЦУКЕН** while keeping 58 % of typing on the home row.
+**Evelina 3.9 has 9× fewer SFBs than ЙЦУКЕН** while keeping 58 % of typing on the home row.
 The price is heavier pinkies (И and Е live on them). Lina wins on SFB and alternation
 but loads the pinkies even more — see the [improvement proposals](PROPOSALS.md).
 
-## 👑 The Eva branch — manual optimization (recommended)
+## 👑 The Evelina branch — manual optimization (recommended)
 
-Eva was designed by a human for humans: Ukrainian letter-frequency analysis, hand
+Evelina was designed by a human for humans: Ukrainian letter-frequency analysis, hand
 alternation (consonants mostly on the left, the core vowels О-А-Е-У-І under the right
 hand) and comfortable rolls.
 
-### 🏆 Best pick: Eva 3.9
+### 🏆 Best pick: Evelina 3.9
 
-The latest version — the result of a quantitative audit of Eva 3.8 (method and numbers
+The latest version — the result of a quantitative audit of Evelina 3.8 (method and numbers
 in [PROPOSALS.md](PROPOSALS.md)). Three swaps outside the home row — **М↔Ч, К↔Ц, Д↔З** —
 untangled the most frequent same-finger conflicts («кр», «ск», «чн», «др»):
 SFB dropped from 2.92 % to **1.96 %** (−33 %) while the home row (58.3 %), the pinkies
@@ -78,7 +78,7 @@ and the Н-О-А-Е vowel block stayed exactly the same. Relearning is minimal: 
 relocated letters sit on the top/bottom rows. Layout file: [Eva-3.9.vil](Eva-3.9.vil)
 
 <p align="center">
-  <img src="images/eva-3.9.svg" alt="Eva 3.9 layout — orange outline marks the keys changed relative to 3.8" width="700">
+  <img src="images/eva-3.9.svg" alt="Evelina 3.9 layout — orange outline marks the keys changed relative to 3.8" width="700">
 </p>
 
 ```text
@@ -88,7 +88,7 @@ relocated letters sit on the top/bottom rows. Layout file: [Eva-3.9.vil](Eva-3.9
 ```
 
 Used to 3.8? It is not going anywhere: the file is [Eva.vil](Eva.vil), the diagram is in
-the [evolution history](#-eva-evolution-history) below.
+the [evolution history](#-evelina-evolution-history) below.
 
 Letters you do not see on the diagram:
 
@@ -107,7 +107,7 @@ Letters you do not see on the diagram:
    **M1** = `Ctrl+1` + layer 1 (English Canary). Bind `Ctrl+0`/`Ctrl+1` as language
    hotkeys in your OS, or replace the macros with your own (`Alt+Shift`, `Win+Space`).
 
-Layers in the file: **0** — Eva (Ukrainian), **1** — English Canary, **2** — digits and
+Layers in the file: **0** — Evelina (Ukrainian), **1** — English Canary, **2** — digits and
 symbols, **7** — service layer (layer switching). Combos on layer 0 produce the
 apostrophe, brackets, dashes and more.
 
@@ -120,14 +120,14 @@ apostrophe, brackets, dashes and more.
 > On a standard Corne 42 the layout works, but you will have to place the service keys
 > yourself. The diagram above shows the core 3×6+3×6 zone.
 
-## 📜 Eva evolution history
+## 📜 Evelina evolution history
 
 The layout did not get here in one day:
 
-- **Eva 3.0 — bigram analysis.** The first serious attempt to untangle the most frequent
+- **Evelina 3.0 — bigram analysis.** The first serious attempt to untangle the most frequent
   bigrams («сп», «тр», «нш») for comfortable rolls.
 
-  <img src="images/eva-3.0.png" alt="Eva 3.0 layout" width="600">
+  <img src="images/eva-3.0.png" alt="Evelina 3.0 layout" width="600">
 
   ```text
   [   ] [ Я ] [ Й ] [ П ] [ К ] [ Д ]        [ Г ] [ Ю ] [ У ] [ Л ] [ Щ ] [ Ї ]
@@ -135,20 +135,20 @@ The layout did not get here in one day:
   [   ] [ Ж ] [ Ц ] [ З ] [ Б ] [ М ]        [ Ф ] [ Ч ] [ Ш ] [ . ] [ Ь ] [ Є ]
   ```
 
-- **Eva 3.2 — punctuation and periphery.** First experiments with punctuation and with
+- **Evelina 3.2 — punctuation and periphery.** First experiments with punctuation and with
   pushing rare letters to the edges; Є moved to the left pinky.
 
-  <img src="images/eva-3.2.png" alt="Eva 3.2 layout" width="600">
+  <img src="images/eva-3.2.png" alt="Evelina 3.2 layout" width="600">
 
-- **Eva 3.6 — layer work.** The core matrix stayed as in 3.2; the logic of the extra
+- **Evelina 3.6 — layer work.** The core matrix stayed as in 3.2; the logic of the extra
   layers and service keys changed.
 
-  <img src="images/eva-3.6.png" alt="Eva 3.6 layout" width="600">
+  <img src="images/eva-3.6.png" alt="Evelina 3.6 layout" width="600">
 
-- **Eva 3.7 — almost final.** І, Ю and Л found their places (І in the centre of the top
+- **Evelina 3.7 — almost final.** І, Ю and Л found their places (І in the centre of the top
   row, Ю on the pinky), but the comma and the period still needed work.
 
-  <img src="images/eva-3.7.png" alt="Eva 3.7 layout" width="600">
+  <img src="images/eva-3.7.png" alt="Evelina 3.7 layout" width="600">
 
   ```text
   [   ] [ Я ] [ Й ] [ П ] [ К ] [ Д ]        [ Г ] [ Л ] [ У ] [ І ] [ Щ ] [ Ї ]
@@ -156,11 +156,11 @@ The layout did not get here in one day:
   [   ] [ Ж ] [ Ц ] [ З ] [ Б ] [ М ]        [ Ф ] [ Ч ] [ Ш ] [ , ] [ Ь ]
   ```
 
-- **Eva 3.8 — perfect punctuation.** Delete left the core zone, letting the comma and
+- **Evelina 3.8 — perfect punctuation.** Delete left the core zone, letting the comma and
   the period take comfortable bottom-row spots. It was the recommended version for a
   long time (file: [Eva.vil](Eva.vil)).
 
-  <img src="images/eva-3.8.png" alt="Eva 3.8 layout" width="600">
+  <img src="images/eva-3.8.png" alt="Evelina 3.8 layout" width="600">
 
   ```text
   [   ] [ Я ] [ Й ] [ П ] [ К ] [ Д ]        [ Г ] [ Л ] [ У ] [ І ] [ Щ ] [ Ї ]
@@ -168,7 +168,7 @@ The layout did not get here in one day:
   [   ] [ Ж ] [ Ц ] [ З ] [ Б ] [ М ]        [ Ш ] [ Ч ] [ , ] [ . ] [ Ь ] [ Ф ]
   ```
 
-- **Eva 3.9 — the quantitative audit** (see above). Analysis on a 6.2 M-letter corpus
+- **Evelina 3.9 — the quantitative audit** (see above). Analysis on a 6.2 M-letter corpus
   showed that all the most frequent SFBs (кр, ск, чн, др) can be untangled with three
   swaps outside the home row: М↔Ч, К↔Ц, Д↔З. SFB −33 % with zero losses elsewhere.
 
@@ -228,9 +228,9 @@ Canary Phonetic UA solves this with a **phonetic mapping** onto the English
 </p>
 
 The result: your fingers travel the same paths for the same sounds, and switching the
-language does not break habits. The honest price: SFB 5.15 % — higher than Eva's
+language does not break habits. The honest price: SFB 5.15 % — higher than Evelina's
 (the phonetic positions of І and С share a finger with В and И — bigrams «ви», «ис»,
-«си»). If Ukrainian is your primary language, take Eva; Canary Phonetic UA is for a
+«си»). If Ukrainian is your primary language, take Evelina; Canary Phonetic UA is for a
 mostly-English workday.
 
 > Note: the base is a hybrid of the ANSI and matrix Canary variants, adapted to
@@ -269,13 +269,13 @@ python analyzer.py corpus_texts/my_text.txt
 ## 💡 Improvement proposals
 
 The quantitative audit of the layouts with concrete, measured variants lives in
-[PROPOSALS.md](PROPOSALS.md): Eva 3.9 (three swaps outside the home row: −33 % SFB
-with the home row untouched), Eva 3.9+ (minimal SFB) and Lina 2.0 (regenerated with
+[PROPOSALS.md](PROPOSALS.md): Evelina 3.9 (three swaps outside the home row: −33 % SFB
+with the home row untouched), Evelina 3.9+ (minimal SFB) and Lina 2.0 (regenerated with
 the honest model).
 
 ## 🤝 Contributing
 
-Ergonomics is a never-ending process. Test Eva 3.9, experiment with Lina, run the
+Ergonomics is a never-ending process. Test Evelina 3.9, experiment with Lina, run the
 metrics on your own texts — and share the results via an Issue or a Pull Request.
 Let's make Ukrainian typing fast and comfortable! 🇺🇦⌨️
 

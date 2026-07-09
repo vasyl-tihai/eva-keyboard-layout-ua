@@ -19,7 +19,7 @@ and bigrams are counted **only inside words** (between words there is a thumb-ke
 > `python analyzer.py my_corpus.txt`. Every conclusion below was checked on the three
 > genres separately; wherever genre affects the result, it is noted.
 
-## Diagnosis of Eva 3.8 (mixed corpus)
+## Diagnosis of Evelina 3.8 (mixed corpus)
 
 | Metric | Value | Comment |
 |---|---|---|
@@ -38,9 +38,9 @@ the home row (к, ч, д, б are on the top/bottom rows). The conflicts can ther
 untangled without touching the home row at all — the "core letters on the home row"
 philosophy stays intact.
 
-## 🥇 Proposal "Eva 3.9" — three swaps outside the home row (recommended)
+## 🥇 Proposal "Evelina 3.9" — three swaps outside the home row (recommended)
 
-> ✅ **Accepted.** Eva 3.9 has been added to the repository ([Eva-3.9.vil](Eva-3.9.vil))
+> ✅ **Accepted.** Evelina 3.9 has been added to the repository ([Eva-3.9.vil](Eva-3.9.vil))
 > and became the recommended version in the README.
 
 Swap **М ↔ Ч**, **К ↔ Ц**, **Д ↔ З** (all six letters are on the top/bottom rows;
@@ -52,7 +52,7 @@ the home row, the pinkies and the vowel block are untouched):
 [   ] [ Ж ] [ К ] [ Д ] [ Б ] [ Ч ]        [ Ш ] [ М ] [ , ] [ . ] [ Ь ] [ Ф ]
 ```
 
-| Metric | Eva 3.8 | Eva 3.9 |
+| Metric | Evelina 3.8 | Evelina 3.9 |
 |---|---|---|
 | SFB (mixed corpus) | 2.92 % | **1.96 %** (−33 %) |
 | Home row | 58.3 % | **58.3 %** (unchanged) |
@@ -60,7 +60,7 @@ the home row, the pinkies and the vowel block are untouched):
 | Inward rolls | 17.0 % | **17.8 %** |
 | Hand alternation | 57.1 % | 55.4 % |
 
-Genre robustness (SFB, Eva 3.8 → Eva 3.9):
+Genre robustness (SFB, Evelina 3.8 → Evelina 3.9):
 
 | Genre | 3.8 | 3.9 | Gain |
 |---|---|---|---|
@@ -87,7 +87,7 @@ What remains:
   to remove it is to evict one of them from the home row — under the "home row above
   all" principle, not worth it.
 
-## Proposal "Eva 3.9+" — five swaps, minimal SFB (experimental)
+## Proposal "Evelina 3.9+" — five swaps, minimal SFB (experimental)
 
 Swaps **Й↔Р**, **М↔Ч**, **Г↔Й**, **А↔У**, **Е↔У**:
 
@@ -98,18 +98,18 @@ Swaps **Й↔Р**, **М↔Ч**, **Г↔Й**, **А↔У**, **Е↔У**:
 ```
 
 On the mixed corpus: SFB 1.87 %, pinkies 17.7 %, but the home row drops to 50.5 %.
-Its SFB advantage over Eva 3.9 is a mere 0.09 pp, while the cost is 8 pp of home row
+Its SFB advantage over Evelina 3.9 is a mere 0.09 pp, while the cost is 8 pp of home row
 and 9 relocated letters instead of 6. **On the large corpus this variant lost its
-purpose — Eva 3.9 is better on almost every axis.** Kept for the record.
+purpose — Evelina 3.9 is better on almost every axis.** Kept for the record.
 
 ## Comparison table (mixed corpus, 6.2 M letters)
 
 | Layout | SFB % | Alternation % | Home row % | Pinkies % |
 |---|---|---|---|---|
 | ЙЦУКЕН | 18.30 | 54.2 | 43.9 | 9.4 |
-| Eva 3.8 | 2.92 | 57.1 | 58.3 | 19.9 |
-| **Eva 3.9** (recommended) | **1.96** | 55.4 | **58.3** | 19.9 |
-| Eva 3.9+ (experimental) | 1.87 | 57.2 | 50.5 | 17.7 |
+| Evelina 3.8 | 2.92 | 57.1 | 58.3 | 19.9 |
+| **Evelina 3.9** (recommended) | **1.96** | 55.4 | **58.3** | 19.9 |
+| Evelina 3.9+ (experimental) | 1.87 | 57.2 | 50.5 | 17.7 |
 | Lina 10M (old) | 0.97 | 74.9 | 53.8 | 24.5 |
 | **Lina 2.0** | **0.53** | 64.3 | 50.6 | ~12 |
 | Canary Phonetic UA | 5.15 | 56.7 | 47.1 | 14.8 |
@@ -152,7 +152,7 @@ aimed at people who type mostly English.
 
 ## Minor proposals
 
-1. **Document Ґ and the apostrophe.** They are invisible in the Eva diagrams: Ґ lives
+1. **Document Ґ and the apostrophe.** They are invisible in the Evelina diagrams: Ґ lives
    on a tap-hold of Г, the apostrophe on a combo. The apostrophe occurs more often in
    Ukrainian text than Ґ does, so it deserves its own line in the README.
 2. **Reconcile Eva.vil with the diagram.** In the file's Vial matrix Ї/Ю/Ф are wired
